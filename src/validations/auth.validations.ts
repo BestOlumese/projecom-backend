@@ -54,6 +54,14 @@ export const loginSchema = z.object({
   params: z.object({}),
 });
 
+export const resendVerificationSchema = z.object({
+  body: z.object({
+    email: emailSchema,
+  }),
+  query: z.object({}),
+  params: z.object({}),
+});
+
 export const registerSchema = z.object({
   body: z.object({
     name: nameSchema,
@@ -70,6 +78,7 @@ export type EmailType = z.infer<typeof emailSchema>;
 export type PasswordType = z.infer<typeof passwordSchema>;
 export type NameType = z.infer<typeof nameSchema>;
 export type RoleType = z.infer<typeof roleSchema>;
+export type ResendVerificationInput = z.infer<typeof resendVerificationSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 

@@ -2,6 +2,7 @@ import { BadRequestError } from "../errors/CustomError";
 import prisma from "../lib/prisma";
 import { hashPassword, comparePassword } from "../utils/password";
 import { Role } from "@prisma/client";
+import { generateEmailToken } from "../utils/tokenUtils";
 
 export const registerService = async (body: {
   email: string;
@@ -30,6 +31,8 @@ export const registerService = async (body: {
         email: email,
         password: hashedPassword,
         role: role,
+        verifyToken: generateEmailToken(),
+        verifyExpires: new Date(Date.now() + 24 * 60 * 60 * 1000)
       },
     });
 
