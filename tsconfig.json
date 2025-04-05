@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,       // Required for Express/Node
+    "skipLibCheck": true          // Avoids unnecessary type checks
+  },
+  "include": ["src/**/*"]
+}
