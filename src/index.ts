@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 // import bodyParser from 'body-parser';
 import cors from "cors";
 import authRouter from "./routers/auth.routes"
+import vendorRouter from "./routers/vendor.routes"
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 // routers
 app.use("/api/auth", authRouter);
+app.use("/api/vendor", vendorRouter);
 
 app.use(errorHandler);
 

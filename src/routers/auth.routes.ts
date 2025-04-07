@@ -1,9 +1,9 @@
 import { checkVerified } from './../middleware/verifyAuth';
 import express from "express";
-import { loginController, registerController, resendVerification, userController, verifyEmail } from "../controllers/auth.controller";
+import { forgotPasswordController, loginController, logoutController, newPasswordController, registerController, resendVerification, userController, verifyEmail } from "../controllers/auth.controller";
 import { asyncHandler } from "../utils/asyncHandler";
 import { validateRequest } from "../middleware/validateRequest";
-import { registerSchema, resendVerificationSchema } from "../validations/auth.validations";
+import { forgotPasswordSchema, newPasswordSchema, registerSchema, resendVerificationSchema } from "../validations/auth.validations";
 import { loginSchema } from "../validations/auth.validations";
 import { checkAuth } from "../middleware/verifyAuth";
 
@@ -22,6 +22,11 @@ router.post(
 );
 
 router.get(
+  "/logout",
+  asyncHandler(logoutController)
+);
+
+router.get(
   "/verify-email",
   asyncHandler(verifyEmail)
 );
@@ -30,6 +35,18 @@ router.post(
   "/resend-verification",
   validateRequest(resendVerificationSchema),
   asyncHandler(resendVerification)
+);
+
+router.post(
+  "/forgot-password",
+  validateRequest(forgotPasswordSchema),
+  asyncHandler(forgotPasswordController)
+);
+
+router.post(
+  "/new-password",
+  validateRequest(newPasswordSchema),
+  asyncHandler(newPasswordController)
 );
 
 router.get(
