@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { HTTPSTATUS } from "../config/http.config";
+import { Role } from "@prisma/client";
 
 // Extend the Request type to include the user property
 declare global {
@@ -48,6 +49,32 @@ export const checkVerified = (
   if (!req.user.isVerified) {
     res.status(HTTPSTATUS.FORBIDDEN).json({
       error: "Please verify your email address",
+    });
+  }
+  next();
+};
+
+export const checkVendor = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  if (!req.user.role || req.user.role !== Role.VENDOR) {
+    res.status(HTTPSTATUS.FORBIDDEN).json({
+      error: "You are not authorized to access this resource",
+    });
+  }
+  next();
+};
+
+export const checkAdmin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  if (!req.user.role || req.user.role !== Role.ADMIN) {
+    res.status(HTTPSTATUS.FORBIDDEN).json({
+      error: "You are not authorized to access this resource",
     });
   }
   next();
