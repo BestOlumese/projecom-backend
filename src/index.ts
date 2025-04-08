@@ -4,8 +4,9 @@ import cookieParser from 'cookie-parser';
 // import bodyParser from 'body-parser';
 import cors from "cors";
 import authRouter from "./routers/auth.routes"
+import vendorRouter from "./routers/vendor.routes"
 import { errorHandler } from "./middleware/errorHandler";
-import vendorRouter from "./routers/vendors.routes";
+
 
 const app = express();
 const port = 8000;
