@@ -36,9 +36,9 @@ export const registerService = async (body: {
       },
     });
 
-    delete user.id;
     delete user.password;
-    delete user.emailVerified;
+    delete user.verifyExpires;
+    delete user.verifyToken;
 
     return user;
   } catch (error: any) {
@@ -68,7 +68,7 @@ export const getUserFromDb = async (email: string, password: string) => {
     }
 
     return existingUser;
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw error;
   }
 };

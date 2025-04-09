@@ -1,13 +1,19 @@
 import express from "express";
 import { asyncHandler } from "../utils/asyncHandler";
-import { createVendorDetails, getVendorDetails, updateVendorDetails } from "../controllers/vendor.controller";
+import {
+  createVendorDetails,
+  getVendorDetails,
+  updateVendorDetails,
+} from "../controllers/vendor.controller";
+import { validateRequest } from "../middleware/validateRequest";
+import { vendorSchema } from "../validations/vendor.validations";
 
 const router = express.Router();
 
-router.post("/", asyncHandler(createVendorDetails))
+router.post("/create", validateRequest(vendorSchema), asyncHandler(createVendorDetails));
 
-router.get("/me",asyncHandler(getVendorDetails));
+router.get("/me", asyncHandler(getVendorDetails));
 
-router.put("/me", asyncHandler(updateVendorDetails))
+router.put("/edit", validateRequest(vendorSchema), asyncHandler(updateVendorDetails));
 
 export default router;

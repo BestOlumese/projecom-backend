@@ -75,7 +75,7 @@ export const forgotPasswordSchema = z.object({
 
 export const newPasswordSchema = z.object({
   body: z.object({
-    token: z.string(),
+    token: z.string().trim(),
     old_password: z.string().trim(),
     new_password: passwordSchema,
   }),

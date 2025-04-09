@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import authRouter from "./routers/auth.routes"
 import vendorRouter from "./routers/vendor.routes"
+import userRouter from "./routers/user.routes"
 import { errorHandler } from "./middleware/errorHandler";
 
 
@@ -24,6 +25,7 @@ app.use(cookieParser())
 // routers
 app.use("/api/auth", authRouter);
 app.use("/api/vendors", vendorRouter)
+app.use("/api/users", userRouter)
 
 app.use(errorHandler);
 
