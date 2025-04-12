@@ -1,4 +1,4 @@
-import { checkVerified } from './../middleware/verifyAuth';
+import { checkVerified } from '../middleware/verifyAuth';
 import express from "express";
 import { forgotPasswordController, loginController, logoutController, newPasswordController, registerController, resendVerification, userController, verifyEmail } from "../controllers/auth.controller";
 import { asyncHandler } from "../utils/asyncHandler";

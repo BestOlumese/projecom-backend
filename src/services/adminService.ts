@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import prisma from "../lib/prisma";
 
 export const approveVendor = async (userId: string) => {
@@ -23,15 +24,23 @@ export const disapproveVendor = async (userId: string) => {
 }
 
 export const getAllVendors = async (userId: string) => {
-    return await prisma.user.findMany({
+    return await prisma.user.findFirst({
         where: {
             id: userId,
+            role: {
+                in: [Role.ADMIN, Role.VENDOR]
+            }
         },
-        include: {
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            isVerified: true,
+            image: true,
+            role: true,
             vendor: true,
-            password: false,
-            verifyToken: false,
-            verifyExpires: false
+            createdAt: true,
+            updatedAt: true,
         },
     });
 }
