@@ -34,11 +34,12 @@ export const registerService = async (body: {
         verifyToken: generateEmailToken(),
         verifyExpires: new Date(Date.now() + 24 * 60 * 60 * 1000)
       },
+      include: { vendor: true }
     });
 
-    delete user.id;
     delete user.password;
-    delete user.emailVerified;
+    delete user.verifyExpires;
+    delete user.verifyToken;
 
     return user;
   } catch (error: any) {
@@ -52,6 +53,7 @@ export const getUserFromDb = async (email: string, password: string) => {
       where: {
         email: email,
       },
+      include: { vendor: true }
     });
 
     if (!existingUser) {
@@ -68,7 +70,7 @@ export const getUserFromDb = async (email: string, password: string) => {
     }
 
     return existingUser;
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw error;
   }
 };
