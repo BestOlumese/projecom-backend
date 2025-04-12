@@ -15,18 +15,20 @@ export const updateUser = async (userId: string, body: {
         where: { id: userId },
         data: {
             name: body.name,
-        }
+        },
+        include: { vendor: true }
     });
 }
 
 export const updateUserImage = async (userId: string, body: {
-    name: string;
+    image: string;
 }) => {
     return prisma.user.update({
         where: { id: userId },
         data: {
             image: body.image,
-        }
+        },
+        include: { vendor: true }
     });
 }
 
@@ -60,7 +62,8 @@ export const updateUserPassword = async (userId: string, body: {
             where: { id: userId },
             data: {
                 password: hashedPassword,
-            }
+            },
+            include: { vendor: true }
         });
 
         delete updatedUser.password;

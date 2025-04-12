@@ -210,13 +210,24 @@ export const loginController = async (req: Request, res: Response) => {
 };
 
 export const userController = async (req: Request, res: Response) => {
-  const user = req.user;
-
-  if (!user) {
+  if (!req.user) {
     return res
       .status(HTTPSTATUS.UNAUTHORIZED)
       .json({ message: "Unauthorized" });
   }
+
+  const user = await prisma.user.findFirst({
+    where: { id: req.user.id },
+    include: { vendor: true },
+  });
+
+  const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    // secure: true,
+    // maxAge: 1000000,
+  });
 
   return res.status(HTTPSTATUS.OK).json({
     user,

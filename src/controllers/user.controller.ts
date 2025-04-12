@@ -20,14 +20,6 @@ export const userUpdateController = async (req: Request, res: Response) => {
         delete user.verifyExpires;
         delete user.verifyToken;
 
-        const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
-          res.cookie("token", token, {
-            httpOnly: true,
-            // secure: true,
-            // maxAge: 1000000,
-          });
-
         return res.status(HTTPSTATUS.OK).json({
             message: "User updated successfully",
             user
@@ -56,14 +48,6 @@ export const userNewPasswordController = async (req: Request, res: Response) => 
         delete user.verifyExpires;
         delete user.verifyToken;
 
-        const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
-          res.cookie("token", token, {
-            httpOnly: true,
-            // secure: true,
-            // maxAge: 1000000,
-          });
-
         return res.status(HTTPSTATUS.OK).json({
             message: "User password updated successfully"
         });
@@ -90,14 +74,6 @@ export const userUpdateImageController = async (req: Request, res: Response) => 
         delete user.password;
         delete user.verifyExpires;
         delete user.verifyToken;
-
-        const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
-          res.cookie("token", token, {
-            httpOnly: true,
-            // secure: true,
-            // maxAge: 1000000,
-          });
 
         return res.status(HTTPSTATUS.OK).json({
             message: "User image updated successfully"

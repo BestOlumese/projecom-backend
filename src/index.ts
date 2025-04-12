@@ -6,6 +6,9 @@ import cors from "cors";
 import authRouter from "./routers/auth.routes"
 import vendorRouter from "./routers/vendor.routes"
 import userRouter from "./routers/user.routes"
+import adminRouter from "./routers/admin.routes"
+import categoryRouter from "./routers/category.routes"
+import subcategoryRouter from "./routers/subcategory.routes"
 import { errorHandler } from "./middleware/errorHandler";
 
 
@@ -26,6 +29,9 @@ app.use(cookieParser())
 app.use("/api/auth", authRouter);
 app.use("/api/vendors", vendorRouter)
 app.use("/api/users", userRouter)
+app.use("/api/admin", adminRouter)
+app.use("/api/category", categoryRouter)
+app.use("/api/subcategory", subcategoryRouter)
 
 app.use(errorHandler);
 

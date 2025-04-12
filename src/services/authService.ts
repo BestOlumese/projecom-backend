@@ -34,6 +34,7 @@ export const registerService = async (body: {
         verifyToken: generateEmailToken(),
         verifyExpires: new Date(Date.now() + 24 * 60 * 60 * 1000)
       },
+      include: { vendor: true }
     });
 
     delete user.password;
@@ -52,6 +53,7 @@ export const getUserFromDb = async (email: string, password: string) => {
       where: {
         email: email,
       },
+      include: { vendor: true }
     });
 
     if (!existingUser) {

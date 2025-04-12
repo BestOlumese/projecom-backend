@@ -5,8 +5,7 @@ import { updateUserRole } from "../services/userService";
 
 export const getVendorDetails = async (req: Request, res: Response) => {
     try {
-        const { userId }= req.body; // assuming you have authentication middleware
-        const vendor = await vendorDetailsByUserId(userId);
+        const vendor = await vendorDetailsByUserId(req.user.id);
 
         if(!vendor) {
             return res.status(HTTPSTATUS.NOT_FOUND).json({
@@ -25,9 +24,30 @@ export const getVendorDetails = async (req: Request, res: Response) => {
     }
 }
 
+export const getVendorByIdDetails = async (req: Request, res: Response) => {
+    try {
+        const vendor = await vendorDetailsByUserId(req.params.userId);
+
+        if(!vendor) {
+            return res.status(HTTPSTATUS.NOT_FOUND).json({
+                message: "Vendor not found"
+            })
+        }
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Vendor fetched successfully",
+            vendor
+        });
+    } catch (error: unknown) {
+        return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+            message: 'Something went wrong try again'
+        });
+    }
+}
+
 export const createVendorDetails = async (req: Request, res: Response) => {
     try {
-        const existingVendor = await vendorDetailsByUserId(req.body.userId);
+        const existingVendor = await vendorDetailsByUserId(req.user.id);
 
         if (existingVendor) {
             return res.status(HTTPSTATUS.BAD_REQUEST).json({
@@ -35,9 +55,11 @@ export const createVendorDetails = async (req: Request, res: Response) => {
             });
         }
 
-        const vendor = await createVendor(req.body)
+        const vendor = await createVendor(req.user.id, req.body)
 
-        await updateUserRole(req.body.userId, "VENDOR");
+        if(req.user.role !== "ADMIN") {
+            await updateUserRole(req.user.id, "VENDOR");
+        }
 
         return res.status(HTTPSTATUS.OK).json({
             message: "Vendor created successfully",
@@ -52,7 +74,7 @@ export const createVendorDetails = async (req: Request, res: Response) => {
 
 export const updateVendorDetails = async (req: Request, res: Response) => {
     try {
-        const vendor = await updateVendor(req.body)
+        const vendor = await updateVendor(req.user.id, req.body)
 
         return res.status(HTTPSTATUS.OK).json({
             message: "Vendor updated successfully",
