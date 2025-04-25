@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "noEmitOnError": false,
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist",
