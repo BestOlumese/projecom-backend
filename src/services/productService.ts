@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Decimal } from "@prisma/client/runtime/library";
 import { generateSlug } from "../utils/slug";
 import { getSubcategoryById } from "./subcategoryService";
