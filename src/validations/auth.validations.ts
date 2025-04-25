@@ -26,7 +26,10 @@ export const emailSchema = z
 export const passwordSchema = z
   .string()
   .trim()
-  .min(MIN_PASSWORD_LENGTH, `Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+  .min(
+    MIN_PASSWORD_LENGTH,
+    `Password must be at least ${MIN_PASSWORD_LENGTH} characters`
+  );
 
 export const nameSchema = z
   .string()
@@ -62,6 +65,24 @@ export const resendVerificationSchema = z.object({
   params: z.object({}),
 });
 
+export const forgotPasswordSchema = z.object({
+  body: z.object({
+    email: emailSchema,
+  }),
+  query: z.object({}),
+  params: z.object({}),
+});
+
+export const newPasswordSchema = z.object({
+  body: z.object({
+    token: z.string().trim(),
+    old_password: z.string().trim(),
+    new_password: passwordSchema,
+  }),
+  query: z.object({}),
+  params: z.object({}),
+});
+
 export const registerSchema = z.object({
   body: z.object({
     name: nameSchema,
@@ -79,6 +100,8 @@ export type PasswordType = z.infer<typeof passwordSchema>;
 export type NameType = z.infer<typeof nameSchema>;
 export type RoleType = z.infer<typeof roleSchema>;
 export type ResendVerificationInput = z.infer<typeof resendVerificationSchema>;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 
