@@ -12,6 +12,7 @@ interface UserJwtPayload extends jwt.JwtPayload {
   role: Role;
   isVerified: boolean;
   vendor?: {
+    id: string;
     approved: boolean;
   };
 }

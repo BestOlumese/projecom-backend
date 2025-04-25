@@ -9,6 +9,7 @@ import userRouter from "./routers/user.routes"
 import adminRouter from "./routers/admin.routes"
 import categoryRouter from "./routers/category.routes"
 import subcategoryRouter from "./routers/subcategory.routes"
+import productRouter from "./routers/product.routes"
 import { errorHandler } from "./middleware/errorHandler";
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -55,6 +56,7 @@ app.use("/api/users", userRouter)
 app.use("/api/admin", adminRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/subcategory", subcategoryRouter)
+app.use("/api/product", productRouter)
 
 app.use(errorHandler);
 

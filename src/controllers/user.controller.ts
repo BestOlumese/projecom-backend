@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { HTTPSTATUS } from "../config/http.config";
 import { updateUser, updateUserImage, updateUserPassword } from "../services/userService";
-import jwt from "jsonwebtoken";
 
 export const userUpdateController = async (req: Request, res: Response) => {
     try {

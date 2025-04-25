@@ -11,7 +11,7 @@ router.put(
   "/update",
   validateRequest(userUpdateSchema),
   checkAuth,
-  checkAuth,
+  checkVerified,
   asyncHandler(userUpdateController)
 );
 
