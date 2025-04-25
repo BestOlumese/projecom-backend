@@ -48,7 +48,7 @@ export const registerService = async (body: {
     });
 
     // Clean up the response
-    const { password: _, verifyExpires, verifyToken, ...userWithoutSensitiveData } = updatedUser;
+    const { password: _, verifyExpires, ...userWithoutSensitiveData } = updatedUser;
     return userWithoutSensitiveData;
   } catch (error: any) {
     throw error;
