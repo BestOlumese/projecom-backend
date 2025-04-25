@@ -28,7 +28,7 @@ router.post(
   asyncHandler(createProductController)
 );
 
-router.get("/all", checkAuth, checkVerified, asyncHandler(getAllProducts));
+router.get("/all", asyncHandler(getAllProducts));
 
 router.get(
   "/vendors/all",
@@ -38,7 +38,7 @@ router.get(
   asyncHandler(getAllProductsByVendor)
 );
 
-router.get("/:id", checkAuth, checkVerified, asyncHandler(getSingleProduct));
+router.get("/:id", asyncHandler(getSingleProduct));
 
 router.get(
   "/:id/vendor",
