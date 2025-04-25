@@ -31,17 +31,23 @@ export const registerService = async (body: {
         email: email,
         password: hashedPassword,
         role: role,
-        verifyToken: generateEmailToken(),
+        isVerified: false,  // Add this
+      },
+    });
+
+    // Then update with the token
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        verifyToken: generateEmailToken(user.id),
         verifyExpires: new Date(Date.now() + 24 * 60 * 60 * 1000)
       },
       include: { vendor: true }
     });
 
-    delete user.password;
-    delete user.verifyExpires;
-    delete user.verifyToken;
-
-    return user;
+    // Clean up the response
+    const { password: _, verifyExpires, verifyToken, ...userWithoutSensitiveData } = updatedUser;
+    return userWithoutSensitiveData;
   } catch (error: any) {
     throw error;
   }

@@ -71,7 +71,7 @@ export const checkVerified = (
   res: Response,
   next: NextFunction
 ): void => {
-  if (!req.user.isVerified) {
+  if (!req.user?.isVerified) {
     res.status(HTTPSTATUS.FORBIDDEN).json({
       error: "Please verify your email address",
     });
