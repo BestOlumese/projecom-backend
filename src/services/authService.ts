@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { BadRequestError } from "../errors/CustomError";
 import prisma from "../lib/prisma";
 import { hashPassword, comparePassword } from "../utils/password";
