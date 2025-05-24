@@ -56,7 +56,7 @@ app.use("/api/users", userRouter)
 app.use("/api/admin", adminRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/subcategory", subcategoryRouter)
-app.use("/api/product", productRouter)
+app.use("/api/products", productRouter)
 
 app.use(errorHandler);
 
