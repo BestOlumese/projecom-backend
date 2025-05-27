@@ -54,9 +54,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/vendors", vendorRouter)
 app.use("/api/users", userRouter)
 app.use("/api/admin", adminRouter)
-app.use("/api/category", categoryRouter)
-app.use("/api/subcategory", subcategoryRouter)
-app.use("/api/product", productRouter)
+app.use("/api/categories", categoryRouter)
+app.use("/api/subcategories", subcategoryRouter)
+app.use("/api/products", productRouter)
 
 app.use(errorHandler);
 

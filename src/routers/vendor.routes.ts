@@ -18,7 +18,7 @@ import {
 const router = express.Router();
 
 router.post(
-  "/create",
+  "/",
   checkAuth,
   checkVerified,
   validateRequest(vendorSchema),
@@ -26,7 +26,7 @@ router.post(
 );
 
 router.get(
-  "/all",
+  "/",
   asyncHandler(getAllVendors)
 );
 
@@ -38,21 +38,21 @@ router.get(
   asyncHandler(getVendorDetails)
 );
 
+router.put(
+  "/",
+  checkAuth,
+  checkVerified,
+  checkVendor,
+  validateRequest(vendorSchema),
+  asyncHandler(updateVendorDetails)
+);
+
 router.get(
   "/:userId",
   checkAuth,
   checkVerified,
   checkVendor,
   asyncHandler(getVendorByIdDetails)
-);
-
-router.put(
-  "/edit",
-  checkAuth,
-  checkVerified,
-  checkVendor,
-  validateRequest(vendorSchema),
-  asyncHandler(updateVendorDetails)
 );
 
 export default router;
