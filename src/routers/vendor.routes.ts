@@ -2,6 +2,7 @@ import express from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import {
   createVendorDetails,
+  getAllVendors,
   getVendorByIdDetails,
   getVendorDetails,
   updateVendorDetails,
@@ -17,11 +18,16 @@ import {
 const router = express.Router();
 
 router.post(
-  "/create",
+  "/",
   checkAuth,
   checkVerified,
   validateRequest(vendorSchema),
   asyncHandler(createVendorDetails)
+);
+
+router.get(
+  "/",
+  asyncHandler(getAllVendors)
 );
 
 router.get(
@@ -32,21 +38,21 @@ router.get(
   asyncHandler(getVendorDetails)
 );
 
+router.put(
+  "/",
+  checkAuth,
+  checkVerified,
+  checkVendor,
+  validateRequest(vendorSchema),
+  asyncHandler(updateVendorDetails)
+);
+
 router.get(
   "/:userId",
   checkAuth,
   checkVerified,
   checkVendor,
   asyncHandler(getVendorByIdDetails)
-);
-
-router.put(
-  "/edit",
-  checkAuth,
-  checkVerified,
-  checkVendor,
-  validateRequest(vendorSchema),
-  asyncHandler(updateVendorDetails)
 );
 
 export default router;

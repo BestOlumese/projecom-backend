@@ -6,7 +6,10 @@ import {
   checkVendor,
   checkVerified,
 } from "../middleware/verifyAuth";
-import { createProductSchema, updateProductSchema } from "../validations/product.validations";
+import {
+  createProductSchema,
+  updateProductSchema,
+} from "../validations/product.validations";
 import {
   createProductController,
   deleteProductController,
@@ -19,8 +22,26 @@ import {
 
 const router = express.Router();
 
+router.get("/", asyncHandler(getAllProducts));
+
+router.get(
+  "/vendor",
+  checkAuth,
+  checkVendor,
+  checkVerified,
+  asyncHandler(getAllProductsByVendor)
+);
+
+router.get(
+  "/vendor/:id",
+  checkAuth,
+  checkVendor,
+  checkVerified,
+  asyncHandler(getSingleProductByVendor)
+);
+
 router.post(
-  "/create",
+  "/",
   validateRequest(createProductSchema),
   checkAuth,
   checkVendor,
@@ -28,28 +49,8 @@ router.post(
   asyncHandler(createProductController)
 );
 
-router.get("/all", asyncHandler(getAllProducts));
-
-router.get(
-  "/vendors/all",
-  checkAuth,
-  checkVendor,
-  checkVerified,
-  asyncHandler(getAllProductsByVendor)
-);
-
-router.get("/:id", asyncHandler(getSingleProduct));
-
-router.get(
-  "/:id/vendor",
-  checkAuth,
-  checkVendor,
-  checkVerified,
-  asyncHandler(getSingleProductByVendor)
-);
-
 router.put(
-  "/update/:id",
+  "/:id",
   validateRequest(updateProductSchema),
   checkAuth,
   checkVendor,
@@ -58,11 +59,13 @@ router.put(
 );
 
 router.delete(
-  "/delete/:id",
+  "/:id",
   checkAuth,
   checkVendor,
   checkVerified,
   asyncHandler(deleteProductController)
 );
+
+router.get("/:id", asyncHandler(getSingleProduct));
 
 export default router;

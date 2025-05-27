@@ -76,7 +76,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
       page = 1,
       limit = 10,
       specifications,
-    } = req.query;
+    } = req.query as ProductQuery;  
 
     // Initialize where clause with approved products
     const where: any = {
