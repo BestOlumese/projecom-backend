@@ -12,20 +12,20 @@ export const getAllVendors = async (req: Request, res: Response) => {
         if (location) filters.location = String(location);
         if (name) filters.name = String(name);
 
-        const take = parseInt(limit as string, 10) || 10;
-        const skip = ((parseInt(page as string, 10) || 1) - 1) * take;
-
-        const vendors = await getVendors({
+        const parsedPage = parseInt(page as string, 10) || 1;
+        const parsedLimit = parseInt(limit as string, 10) || 10;
+        const {vendors, meta} = await getVendors({
             ...filters,
             sortBy: String(sortBy),
             sortOrder: String(sortOrder),
-            skip,
-            take,
+            page: parsedPage,
+            limit: parsedLimit,
         });
 
         return res.status(HTTPSTATUS.OK).json({
             message: "Vendors fetched successfully",
             vendors,
+            meta
         });
     } catch (error: unknown) {
         return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
@@ -46,7 +46,7 @@ export const getVendorDetails = async (req: Request, res: Response) => {
 
         return res.status(HTTPSTATUS.OK).json({
             message: "Vendor fetched successfully",
-            vendor
+            vendor,
         });
     } catch (error: unknown) {
         return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
