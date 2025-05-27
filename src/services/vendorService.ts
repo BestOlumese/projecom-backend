@@ -1,4 +1,49 @@
+import { Prisma } from "@prisma/client";
 import prisma from "../lib/prisma";
+
+export const getVendors = async (options?: VendorProductQuery) => {
+  const {
+    location,
+    name,
+    page = 1,
+    limit = 10,
+    sortBy = "createdAt",
+    sortOrder = "desc",
+  } = options || {};
+
+  const where: Prisma.VendorWhereInput = {};
+
+  if (location) {
+    where.address = { contains: location, mode: "insensitive" };
+  }
+
+  if (name) {
+    where.businessName = { contains: name, mode: "insensitive" };
+  }
+
+  const skip = (page - 1) * limit;
+
+  const vendors = await prisma.vendor.findMany({
+    where,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  });
+
+  const totalCount = await prisma.vendor.count({ where });
+
+  return {
+    vendors,
+    meta: {
+      currentPage: page,
+      itemsPerPage: limit,
+      totalItems: totalCount,
+      totalPages: Math.ceil(totalCount / limit),
+    },
+  };
+};
 
 export const vendorDetailsByUserId = async (userId: string) => {
   const vendor = await prisma.vendor.findFirst({ where: { userId } });

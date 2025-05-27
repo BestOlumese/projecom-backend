@@ -2,6 +2,37 @@ import { Request, Response } from "express";
 import { createVendor, updateVendor, vendorDetailsByUserId } from "../services/vendorService";
 import { HTTPSTATUS } from "../config/http.config";
 import { updateUserRole } from "../services/userService";
+import { getVendors } from "../services/vendorService";
+
+export const getAllVendors = async (req: Request, res: Response) => {
+    try {
+        const { location, name, sortBy = "createdAt", sortOrder = "desc", page = "1", limit = "10" } = req.query;
+
+        const filters: any = {};
+        if (location) filters.location = String(location);
+        if (name) filters.name = String(name);
+
+        const take = parseInt(limit as string, 10) || 10;
+        const skip = ((parseInt(page as string, 10) || 1) - 1) * take;
+
+        const vendors = await getVendors({
+            ...filters,
+            sortBy: String(sortBy),
+            sortOrder: String(sortOrder),
+            skip,
+            take,
+        });
+
+        return res.status(HTTPSTATUS.OK).json({
+            message: "Vendors fetched successfully",
+            vendors,
+        });
+    } catch (error: unknown) {
+        return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+            message: 'Something went wrong, try again'
+        });
+    }
+};
 
 export const getVendorDetails = async (req: Request, res: Response) => {
     try {

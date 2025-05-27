@@ -2,6 +2,7 @@ import express from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import {
   createVendorDetails,
+  getAllVendors,
   getVendorByIdDetails,
   getVendorDetails,
   updateVendorDetails,
@@ -22,6 +23,11 @@ router.post(
   checkVerified,
   validateRequest(vendorSchema),
   asyncHandler(createVendorDetails)
+);
+
+router.get(
+  "/all",
+  asyncHandler(getAllVendors)
 );
 
 router.get(
